@@ -1,4 +1,5 @@
 import math
+
 # Input Parameters
 m = 100     # total weight (kg)
 deg = 8     # max incline angle (degrees)
@@ -9,23 +10,25 @@ accel = 0.4 # acceleration (m/s^2)
 V = 24      # input voltage
 level_time = 40 # 평지이동 시간 (분)
 incline_time = 20 #오르막 이동 시간 (분)
-
 Optime = level_time + incline_time # operating time (min)
 
 
-effBATtoESC = 0.95
-effESCtoMOT = 0.96
-effMOT = 0.92
-effTOT = effBATtoESC*effESCtoMOT*effMOT
-rad = deg*math.pi/180
-g = 9.81    # gravitational acceleration (m/s^2)
-angvel = vel/r  #angular velocity of wheel (rad/s)
+effBATtoESC = 0.95                                          # Battery to ESC Efficiecy
+effESCtoMOT = 0.96                                          # ESC to Motor Efficiency
+effMOT = 0.92                                               # Motor Efficiency
+effTOT = effBATtoESC*effESCtoMOT*effMOT                     # Total Efficiency
+rad = deg*math.pi/180                                       # convert degree to radian
+g = 9.81                                                    # gravitational acceleration (m/s^2)
+angvel = vel/r                                              # angular velocity of wheel (rad/s)
 
-T1 = (1/effTOT)*(accel+g*math.sin(rad))*m*r/N   #오르막 이동
+
+# 오르막 이동 시 필요 성능
+T1 = (1/effTOT)*(accel+g*math.sin(rad))*m*r/N
 P1 = T1*angvel
 I1 = P1/V
 
-T2 = (1/effTOT)*accel*m*r/N   #평지이동
+# 평지 이동 시 필요 성능
+T2 = (1/effTOT)*accel*m*r/N
 P2 = T2*angvel
 I2 = P2/V
 
